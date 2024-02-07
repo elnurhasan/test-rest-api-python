@@ -6,7 +6,7 @@ class Blog(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE, null=True, verbose_name='Author')
 
     def __str__(self) -> str:
-        return self.author.fullname
+        return self.author.fullname if self.author else 'Not set'
 
 
 class Post(models.Model):
