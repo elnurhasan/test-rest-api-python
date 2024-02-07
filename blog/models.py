@@ -3,7 +3,7 @@ from user.models import User
 
 
 class Blog(models.Model):
-    author = models.ForeignKey(User, on_delete=models.CASCADE, null=True, verbose_name='Author')
+    author = models.OneToOneField(User, on_delete=models.CASCADE, related_name='blog', null=True, verbose_name='Author')
 
     def __str__(self) -> str:
         return self.author.fullname if self.author else 'Not set'
