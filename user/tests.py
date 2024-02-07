@@ -1,5 +1,5 @@
 from django.test import TestCase
-from user.models import User
+from user.models import User, News
 from blog.models import Post
 
 
@@ -25,17 +25,32 @@ class UserTestCase(TestCase):
         self.first_user.subscribe_to(blog)
         self.assertEqual(len(self.first_user.subscribed_blogs), 2)
 
-    def test_user_news_list(self):
-        users = []
+
+class NewsTestCase(TestCase):
+
+    def setUp(self):
+        self.users = []
         for i in range(1000):
-            users.append(
+            self.users.append(
                 User.objects.create(
                     fullname = f"User {i}"
                 )
             )
-        for user in users[:100]:
-            Post.objects.create(
-                blog = user.blog,
-                title = f"Title {user.id}- {user.blog.id}",
-                content = '',
+        for user in self.users[:100]:
+            for s_user in self.users[100:]:
+                user.subscribe_to(s_user.blog)
+
+
+    def test_user_news_list(self):
+        posts = []
+        for user in self.users[:100]:
+            posts.append(
+                Post.objects.create(
+                    blog = user.blog,
+                    title = f"Title {user.id}- {user.blog.id}",
+                    content = '',
+                )
             )
+
+        for user in self.users[:100]:
+            self.assertTrue(bool(user.news_list.all()))
