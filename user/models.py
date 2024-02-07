@@ -17,3 +17,13 @@ class User(models.Model):
     @property
     def subscribed_blogs(self):
         return self.subscribes.all()
+
+
+class News(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='news_list')
+    post = models.ForeignKey('blog.Post', on_delete=models.CASCADE, related_name='in_news_list')
+    is_read = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='Created date')
+
+    def __str__(self) -> str:
+        return self.post
