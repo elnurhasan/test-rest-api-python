@@ -24,6 +24,10 @@ class User(models.Model):
             post = post,
             is_read = False
         )
+    
+    def set_news_is_read(self, news):
+        news.is_read = True
+        news.save()
 
 
 class News(models.Model):
