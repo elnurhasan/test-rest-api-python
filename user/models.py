@@ -17,6 +17,13 @@ class User(models.Model):
     @property
     def subscribed_blogs(self):
         return self.subscribes.all()
+    
+    def add_post_to_news_list(self, post):
+        News.objects.create(
+            user = self,
+            post = post,
+            is_read = False
+        )
 
 
 class News(models.Model):
@@ -26,4 +33,4 @@ class News(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Created date')
 
     def __str__(self) -> str:
-        return self.post
+        return self.post.title
