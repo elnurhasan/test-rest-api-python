@@ -25,6 +25,11 @@ services:
       - db:db
     networks:
       - test-network
+  redis:
+    image: library/redis:5.0-alpine
+    restart: unless-stopped
+    networks:
+      - test-network
 
 networks:
   test-network:
