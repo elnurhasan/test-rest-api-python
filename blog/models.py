@@ -10,6 +10,7 @@ class Blog(models.Model):
 
 
 class Post(models.Model):
+    blog = models.ForeignKey(Blog, on_delete=models.CASCADE, related_name='post', null=True, verbose_name='Blog')
     title = models.CharField(max_length=128, verbose_name='Title')
     content = models.CharField(max_length=140, null=True, blank=True, verbose_name='Content')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Created date')
