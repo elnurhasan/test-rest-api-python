@@ -133,11 +133,12 @@ CELERY_RESULT_BACKEND  =  "redis://redis:6379/1"
 
 CELERY_BEAT_SCHEDULE = {
       'run-every-30-seconds': {
-        'task': 'user.tasks.test_task',
+        'task': 'user.tasks.sheduler_task',
         'schedule': 30.0,
-        'args': (16, 16),
         'options': {
             'expires': 15.0,
         },
     },
 }
+
+POST_SIZE_IN_NEWS_LIST_FOR_USER = int(os.getenv("POST_SIZE_IN_NEWS_LIST_FOR_USER", '500'))
