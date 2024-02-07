@@ -45,6 +45,22 @@ services:
       - redis:redis
     networks:
       - test-network
+  celery_beat:
+    build: .
+    env_file:
+      - .env
+    command: bash -c "celery -A user.celery beat"
+    restart: always
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+      - redis
+    links:
+      - db:db
+      - redis:redis
+    networks:
+      - test-network
   redis:
     image: library/redis:5.0-alpine
     restart: unless-stopped
