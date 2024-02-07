@@ -19,10 +19,30 @@ services:
       - .:/app
     depends_on:
       - db
+      - redis
+      - celery
     ports:
       - "8000:8000"
     links:
       - db:db
+      - redis:redis
+      - celery:celery
+    networks:
+      - test-network
+  celery:
+    build: .
+    env_file:
+      - .env
+    command: bash -c "celery -A user.celery worker --loglevel=info"
+    restart: always
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+      - redis
+    links:
+      - db:db
+      - redis:redis
     networks:
       - test-network
   redis:
