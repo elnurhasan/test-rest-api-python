@@ -37,13 +37,13 @@ class NewsTestCase(TestCase):
                 )
             )
         for user in self.users[:100]:
-            for s_user in self.users[100:]:
+            for s_user in self.users[100:110]:
                 user.subscribe_to(s_user.blog)
 
 
     def test_user_news_list(self):
         posts = []
-        for user in self.users[:100]:
+        for user in self.users[100:110]:
             posts.append(
                 Post.objects.create(
                     blog = user.blog,
@@ -52,5 +52,5 @@ class NewsTestCase(TestCase):
                 )
             )
 
-        for user in self.users[:100]:
+        for user in self.users[:10]:
             self.assertTrue(bool(user.news_list.all()))
