@@ -2,12 +2,12 @@ from rest_framework import serializers
 from rest_framework.validators import UniqueTogetherValidator
 from django.http import Http404
 from user.models import User, News
+from blog.serializers import PostSerializer
 
 
-class NewsSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = News
-        fields = ['id', 'user', 'post', 'is_read', 'created_at']
+class NewsSerializer(serializers.Serializer):
+    id = serializers.IntegerField(read_only=True)
+    post = PostSerializer(read_only=True)
 
 
 class UserSerializer(serializers.Serializer):
