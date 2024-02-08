@@ -7,6 +7,12 @@ services:
       - .env
     volumes:
       - pg-vol:/var/lib/postgresql/data
+      - ./pg_data/dump.sql:/docker-entrypoint-initdb.d/dummy_dump.sql
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
     networks:
       - test-network
   api:
@@ -18,9 +24,8 @@ services:
     volumes:
       - .:/app
     depends_on:
-      - db
-      - redis
-      - celery
+      db:
+        condition: service_healthy
     ports:
       - "8000:8000"
     links:
@@ -37,12 +42,6 @@ services:
     restart: always
     volumes:
       - .:/app
-    depends_on:
-      - db
-      - redis
-    links:
-      - db:db
-      - redis:redis
     networks:
       - test-network
   celery_beat:
@@ -53,12 +52,6 @@ services:
     restart: always
     volumes:
       - .:/app
-    depends_on:
-      - db
-      - redis
-    links:
-      - db:db
-      - redis:redis
     networks:
       - test-network
   redis:
