@@ -65,10 +65,9 @@ The system restore the test database and launches the celery, redis, postgresql 
 
 ## Admin dashboard
 
-Install my-project with npm
+For demo, login and pasword is:
 
 ```bash
-  For demo, login and pasword is:
   admin / admin
 ```
     
