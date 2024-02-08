@@ -16,10 +16,11 @@ class UserDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = UserSerializer
 
 
-class NewsList(generics.ListCreateAPIView):
-    queryset = News.objects.all()
-    serializer_class = NewsSerializer
-
+@api_view(['GET'])
+def news_list(request, user_id, format=None):
+    user = User.objects.get(pk=user_id)
+    news = News.objects.filter(user=user).all()
+    return Response(NewsSerializer(news, many=True).data)
 
 @api_view(['GET'])
 def user_api(request, format=None):
