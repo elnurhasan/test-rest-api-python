@@ -22,7 +22,8 @@ class User(models.Model):
         News.objects.create(
             user = self,
             post = post,
-            is_read = False
+            is_read = False,
+            created_at = post.created_at
         )
     
     def set_news_is_read(self, news):
@@ -34,7 +35,10 @@ class News(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='news_list')
     post = models.ForeignKey('blog.Post', on_delete=models.CASCADE, related_name='in_news_list')
     is_read = models.BooleanField(default=False)
-    created_at = models.DateTimeField(auto_now_add=True, verbose_name='Created date')
+    created_at = models.DateTimeField(null=True, verbose_name='Created date')
 
     def __str__(self) -> str:
         return self.post.title
+    
+    class Meta:
+        ordering = ['-created_at']
