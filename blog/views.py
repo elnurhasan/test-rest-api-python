@@ -16,8 +16,7 @@ class PostDetail(generics.RetrieveUpdateDestroyAPIView):
 
 
 @api_view(['GET'])
-def api_root(request, format=None):
+def blog_api(request, format=None):
     return Response({
         'Post': reverse('post-list', request=request, format=format),
-        'Post Details': reverse('post-detail', request=request, format=format),
     })

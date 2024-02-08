@@ -22,7 +22,7 @@ class NewsList(generics.ListCreateAPIView):
 
 
 @api_view(['GET'])
-def api_root(request, format=None):
+def user_api(request, format=None):
     return Response({
         'Users': reverse('user-list', request=request, format=format),
         'News': reverse('news-list', request=request, format=format),
