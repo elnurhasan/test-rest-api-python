@@ -1,5 +1,6 @@
 celery==5.3.6
 Django==5.0
+django-rest-swagger==2.2.0
 djangorestframework==3.14.0
 mixer==7.2.2
 psycopg2==2.9.9
